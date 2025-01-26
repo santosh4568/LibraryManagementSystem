@@ -1,0 +1,131 @@
+/* Navbar.css */
+
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #533bd7, #3f39d5);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-logo a {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.navbar-logo a:hover {
+  color: #c8e6c9;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin: 0 10px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #e8f5e9;
+}
+
+.navbar-buttons .btn-login,
+.navbar-buttons .btn-signup {
+  padding: 8px 15px;
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-login {
+  background: #0f014a;
+}
+
+.btn-signup {
+  background: #0f014a;
+}
+
+.btn-login:hover {
+  background: #2109da;
+}
+
+.btn-signup:hover {
+  background: #2109da;
+}
+
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+  }
+  .navbar-buttons {
+    margin-left: auto;
+  }
+}
+
+/* CSS for Login Page */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+input {
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+select {
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  width: 300px;
+  border: none;
+  border-radius: 5px;
+  background: #0f014a;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
