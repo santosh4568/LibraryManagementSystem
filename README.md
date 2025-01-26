@@ -1,4 +1,3 @@
-Here's the README.md file for your Library Management System project:
 # Library Management System
 
 Welcome to the Library Management System, a modern and intuitive platform designed to streamline and enhance the management of library operations. This project leverages the power of React.js for the frontend and Spring Boot for the backend, providing a robust and scalable solution for libraries of all sizes.
