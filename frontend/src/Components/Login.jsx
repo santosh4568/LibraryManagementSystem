@@ -46,8 +46,8 @@ const Login = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setErrorMsg("User not found");
-        navigate("/register");
+        setErrorMsg("User not found !! Please register");
+        //navigate("/register");
 
       }
       console.log(error);

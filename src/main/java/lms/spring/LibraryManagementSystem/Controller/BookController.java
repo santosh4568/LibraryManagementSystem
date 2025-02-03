@@ -15,6 +15,12 @@ public class BookController {
     @Autowired
     BookService bookService;
 
+
+    @GetMapping({"/", "/{path:[^\\.]*}"})
+    public String index() {
+        return "forward:/index.html";
+    }
+
     @PostMapping("/save")
     public ResponseEntity<Book> saveBook(@RequestBody Book book){
         return ResponseEntity.ok(bookService.addBook(book));

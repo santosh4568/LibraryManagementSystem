@@ -4,7 +4,7 @@ import {createUser} from '../API/UserService'
 import { useNavigate } from "react-router";
 
 const Signup = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [regdNo, setRegdNo] = useState("");

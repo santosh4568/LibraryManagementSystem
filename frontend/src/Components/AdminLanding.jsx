@@ -9,6 +9,10 @@ const AdminLanding = () => {
     navigate('/admin/users');
   };
 
+  const handleBooks = () => {
+    navigate('/admin/books');
+  };
+
   return (
     <>
       <Navbar />
@@ -43,7 +47,7 @@ const AdminLanding = () => {
               <div className="p-4 rounded shadow" style={{ background: "#ffffff" }}>
                 <h3 className="fw-bold">Book Management</h3>
                 <p>Add new books, update details, or remove books.</p>
-                <button className="btn btn-primary">Manage Books</button>
+                <button className="btn btn-primary" onClick={handleBooks}>Manage Books</button>
               </div>
             </div>
 

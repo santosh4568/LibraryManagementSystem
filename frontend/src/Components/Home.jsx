@@ -14,7 +14,7 @@ const Home = () => {
           maxHeight: "83vh",
         }}
       >
-        <div className="container py-5">
+        <div className="container py-5 mt-5">
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold">Welcome to MyLibrary</h1>
             <p className="lead">
