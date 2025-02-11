@@ -59,4 +59,8 @@ public class BookService {
         return bookRepo.findAll();
     }
 
+    public List<Book> getBookById(Long id) {
+        return bookRepo.findBookById(id);
+    }
+
 }

@@ -122,7 +122,7 @@ const EditBook = () => {
                         <option value="Mathematics">Mathematics</option>
                         <option value="History">History</option>
                         <option value="Literature">Literature</option>
-                        <option value="Fiction">Fiction</option>
+                        <option value="Programming">Programming</option>
                         <option value="Biography">Biography</option>
                         <option value="Others">Others</option>
                     </select>

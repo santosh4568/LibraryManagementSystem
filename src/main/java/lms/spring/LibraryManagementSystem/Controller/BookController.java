@@ -16,11 +16,6 @@ public class BookController {
     BookService bookService;
 
 
-    @GetMapping({"/", "/{path:[^\\.]*}"})
-    public String index() {
-        return "forward:/index.html";
-    }
-
     @PostMapping("/save")
     public ResponseEntity<Book> saveBook(@RequestBody Book book){
         return ResponseEntity.ok(bookService.addBook(book));
@@ -57,6 +52,17 @@ public class BookController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(bookService.getBookByPublisher(publisher));
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<List<Book>> getBookById(@PathVariable(value = "id") Long id){
+        if(id == null){
+            return ResponseEntity.badRequest().build();
+        }
+        if(bookService.getBookById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(bookService.getBookById(id));
     }
 
     @GetMapping("/category/{category}")

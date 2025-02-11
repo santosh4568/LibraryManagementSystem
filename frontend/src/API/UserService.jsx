@@ -9,6 +9,9 @@ export async function fetchUsers() {
 export async function fetchUserByEmail(email) {
     return axios.post(`${USER_API_BASE_URL}/${email}`);
 }
+export async function fetchUserByid(id) {
+    return axios.get(`${USER_API_BASE_URL}/id/${id}`);
+}
 
 export async function fetchUserByRegdNo(regdNo) {
     return axios.get(`${USER_API_BASE_URL}/${regdNo}`);

@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext'; // Import Auth Context
-import {fetchBookByTitle , fetchBookByAuthor , fetchBookByPublisher , fetchBookByLanguage} from '../API/BookService'
+import {fetchBookByTitle , fetchBookByAuthor , fetchBookByPublisher , fetchBookByLanguage , fetchBookByCategory , fetchBookById} from '../API/BookService'
 
 const Navbar = () => {
   const navigate = useNavigate(); // Navigation hook
@@ -37,12 +37,24 @@ const Navbar = () => {
       case 'language':
         response = await fetchBookByLanguage(searchValue);
         break;
+      case 'category':
+        response = await fetchBookByCategory(searchValue);
+        break;
+      case 'id':
+        response = await fetchBookById(searchValue);
+        break;
       default:
         return;
     }
 
+    // console.log(response.data);
+    // console.log(response.data.length);
+
     if (response.data.length > 0) {
       handleShowModal(response.data);
+    }
+    else{
+      handleShowModal([]);
     }
   };
 
@@ -93,10 +105,13 @@ const Navbar = () => {
                 style={{ width: '200px' }}
               />
               <select className="form-select" style={{ width: '120px' }} name='searchType'>
+                <option value="default">Select ..</option>
+                <option value="id">Book ID</option>
                 <option value="title">Title</option>
                 <option value="author">Author</option>
                 <option value="publisher">Publisher</option>
                 <option value="language">Language</option>
+                <option value="category">Category</option>
               </select>
               <button
                 className="btn btn-outline-light ms-2"
@@ -136,32 +151,33 @@ const Navbar = () => {
         </div>
       </div>
       
-      {/* Book Details Modal */}
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Book Details</Modal.Title>
+           {/* Book Details Modal */}
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton style={{ backgroundColor: "#f6f7f8", borderBottom: "none"  , textAlign : 'center'}}>
+          <Modal.Title style={{ color: "#2c3e50" }}>Book Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body >
           {bookDetails.length > 0 ? (
             <ul>
               {bookDetails.map((book, index) => (
-                <li key={index}>
-                  <p>Book ID : {book.id}</p>
-                  <p>Title: {book.title}</p>
-                  <p>Author: {book.author}</p>
-                  <p>Publisher: {book.publisher}</p>
-                  <p>Language: {book.language}</p>
-                  <p>Price : Rs.{book.price}</p>
-
-                  {/* Add more book details as needed */}
+                <li key={index} style={{ marginBottom: "15px" }}>
+                  <p><strong>Book ID:</strong> {book.id}</p>
+                  <p><strong>Title:</strong> {book.title}</p>
+                  <p><strong>Author:</strong> {book.author}</p>
+                  <p><strong>Publisher:</strong> {book.publisher}</p>
+                  <p><strong>Language:</strong> {book.language}</p>
+                  <p><strong>Category:</strong> {book.category}</p>
+                  <p><strong>Price:</strong> Rs.{book.price}</p>
+                  <p><strong>Total Copies:</strong> {book.totalCopies}</p>
+                  <p><strong>Copies Available:</strong> {book.availableCopies}</p>
                 </li>
               ))}
             </ul>
           ) : (
-            <p>No books found.</p>
+            <p>No book found.</p>
           )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{ backgroundColor: "#f6f7f8", borderTop: "none" }}>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>

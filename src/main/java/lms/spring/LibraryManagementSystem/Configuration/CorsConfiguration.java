@@ -15,20 +15,20 @@ public class CorsConfiguration {
         org.springframework.web.cors.CorsConfiguration corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
 
         // Allow the frontend's origin
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3000"));
-
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3000", "http://localhost:5174"));
+    
         // Specify allowed HTTP methods
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-
+    
         // Allow all headers
         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-
-        // Allow credentials (e.g., cookies, authorization headers)
+    
+        // Allow credentials
         corsConfiguration.setAllowCredentials(true);
-
+    
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
-
+    
         return new CorsFilter(source);
     }
 }

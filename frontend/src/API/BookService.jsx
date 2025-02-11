@@ -10,6 +10,10 @@ export async function fetchBookByTitle(title) {
     return axios.get(`${BOOK_API_BASE_URL}/title/${title}`);
 }
 
+export async function fetchBookById(id) {
+    return axios.get(`${BOOK_API_BASE_URL}/id/${id}`);
+}
+
 export async function fetchBookByAuthor(author) {
     return axios.get(`${BOOK_API_BASE_URL}/author/${author}`);
 }

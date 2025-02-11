@@ -42,6 +42,17 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserByRegdNo(regdNo));
     }
 
+    @GetMapping("/id/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id){
+        if(id == null){
+            return ResponseEntity.badRequest().build();
+        }
+        if(userService.getUserById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(userService.getUserById(id));
+    }
+
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());
