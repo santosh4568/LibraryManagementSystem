@@ -42,3 +42,7 @@ export async function fetchIssuedBookByStatus(status) {
 export async function fetchAllIssuedBooks() {
     return axios.get(`${BOOK_ISSUED_API_BASE_URL}/getAll`);
 }  
+
+export async function returnBook(bookId) {
+    return axios.get(`${BOOK_ISSUED_API_BASE_URL}/return/${bookId}`);
+}

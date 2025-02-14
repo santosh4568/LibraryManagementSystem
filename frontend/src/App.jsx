@@ -13,6 +13,7 @@ import AddBooks from './Components/AddBooks.jsx';
 import StudentLanding from './Components/StudentLanding.jsx';
 import LendBook from './Components/LendBook.jsx';
 import BorrowedBooks from './Components/BorrowedBooks.jsx';
+import ReturnedBooks from './Components/ReturnedBooks.jsx';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/add-book" element={<AddBooks />} />
         <Route path='/student/lend-books' element={<LendBook />} />
         <Route path="/student/view-books" element={<BorrowedBooks />} />
+        <Route path="/student/return-books" element={<ReturnedBooks />} />
         <Route path="/edit-user/:id" element={<EditUser />} />
         <Route path="/edit-book/:title" element={<EditBook />} />
         <Route path="/logout" element={<Logout />} />

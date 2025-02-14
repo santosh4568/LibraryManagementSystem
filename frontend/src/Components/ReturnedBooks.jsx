@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { fetchIssuedBookByUserId } from "../API/BookIssuedService";
+import { fetchIssuedBookByUserId, returnBook } from "../API/BookIssuedService";
 import { fetchBookById } from "../API/BookService";
 import { useNavigate } from "react-router";
 import Navbar from "./Navbar";
 import { useAuth } from "./AuthContext";
 
-const BorrowedBooks = () => {
+const ReturnedBooks = () => {
   const { auth } = useAuth();
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [bookDetails, setBookDetails] = useState({});
@@ -40,7 +40,6 @@ const BorrowedBooks = () => {
           details[borrowedBook.bookid] = bookResponse.data; // Store book details in a dictionary for easy lookup
         })
       );
-      //console.log("Book details:", details); // Debugging: Log the book details
       setBookDetails(details);
     } catch (error) {
       console.error("Error fetching book details:", error);
@@ -51,7 +50,19 @@ const BorrowedBooks = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleReturnBook = async (bookId) => {
+    try {
+      await returnBook(bookId);
+      alert("Book returned successfully!");
+      fetchBorrowedBooks(); // Refresh the list after returning the book
+    } catch (error) {
+      console.error("Error returning book:", error);
+      alert("Failed to return the book. Please try again.");
+    }
+  };
+
   const filteredBooks = borrowedBooks.filter((borrowedBook) => {
+    if (borrowedBook.status !== "Borrowed") return false;
     const bookArray = bookDetails[borrowedBook.bookid];
     if (!Array.isArray(bookArray) || bookArray.length === 0) return false;
   
@@ -62,10 +73,6 @@ const BorrowedBooks = () => {
     if (searchType === "category") return book.category?.toLowerCase().includes(searchTerm.toLowerCase());
     return book;
   });
-
-  const handleDash = () => {
-    navigate("/student");
-  };
 
   if (loading) {
     return (
@@ -108,9 +115,7 @@ const BorrowedBooks = () => {
         {/* Borrowed Books Cards */}
         <div className="row">
           {filteredBooks.map((borrowedBook) => {
-            //console.log(borrowedBook);
             const book = bookDetails[borrowedBook.bookid][0];
-            //console.log(book);
             return (
               <div className="col-md-4 mb-4" key={borrowedBook.id}>
                 <div className="card shadow-sm">
@@ -127,9 +132,9 @@ const BorrowedBooks = () => {
                         <p className="card-text">
                           <strong>Category:</strong> {book.category || "Category not available"}
                         </p>
-                        {/* <p className="card-text">
+                        <p className="card-text">
                           <strong>Publisher:</strong> {book.publisher || "Publisher not available"}
-                        </p> */}
+                        </p>
                         <p className="card-text">
                           <strong>Language:</strong> {book.language || "Language not available"}
                         </p>
@@ -146,25 +151,27 @@ const BorrowedBooks = () => {
                     <p className="card-text">
                       <strong>Status:</strong> {borrowedBook.status}
                     </p>
-                    {/* <p className="card-text">
-                      <strong>Is Returned :</strong> {borrowedBook.returned == false ? "No" : "Yes"}
-                    </p> */}
                     <p className="card-text">
-                      <strong>Fine:</strong> Rs {borrowedBook.fine}
+                      <strong>Fine: </strong> Rs {borrowedBook.fine}
                     </p>
                     {/* <p className="card-text">
                       <strong>Remarks:</strong> {borrowedBook.remarks}
                     </p> */}
+                    <button
+                      className="btn btn-primary mt-2"
+                      onClick={() => handleReturnBook(borrowedBook.bookid)}
+                    >
+                      Return Book
+                    </button>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
-        <button className="btn btn-primary" onClick={handleDash} style={{marginLeft : '40%'}}>Dashboard</button>
       </div>
     </>
   );
 };
 
-export default BorrowedBooks;
+export default ReturnedBooks;
