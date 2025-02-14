@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RestController
@@ -50,6 +52,23 @@ public class BookIssuedController {
         return ResponseEntity.ok(bookIssuedService.updateBookIssued(bookIssued));
     }
 
+    @GetMapping("/return/{id}")
+    public ResponseEntity<BookIssued> returnBook(@PathVariable(value = "id") Long id){
+        if(bookIssuedService.getBookIssuedById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
+        BookIssued bookIssued = bookIssuedService.getBookIssuedById(id);
+        bookIssued.setReturned(true);
+        bookIssued.setStatus("Returned");
+        List<Book> existedBook = bookService.getBookById(bookIssued.getBookid());
+        if(existedBook.size() == 0){
+            return ResponseEntity.badRequest().build();
+        }
+        Book book = existedBook.get(0);
+        book.setAvailableCopies(book.getAvailableCopies()+1);
+        return ResponseEntity.ok(bookIssuedService.updateBookIssued(bookIssued));
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBookIssued(@PathVariable(value = "id") Long id){
         if(bookIssuedService.getBookIssuedById(id) == null){
@@ -82,15 +101,46 @@ public class BookIssuedController {
     }
 
     @GetMapping("/userid/{userid}")
-    public ResponseEntity<List<BookIssued>> getBookIssuedByUserid(@PathVariable(value = "userid") Long userid){
-        if(userid == null){
+    public ResponseEntity<List<BookIssued>> getBookIssuedByUserid(@PathVariable(value = "userid") Long userid) {
+        if (userid == null) {
             return ResponseEntity.badRequest().build();
         }
-        if(bookIssuedService.getBookIssuedByUserid(userid).size() == 0){
+
+        List<BookIssued> issuedBooks = bookIssuedService.getBookIssuedByUserid(userid);
+        if (issuedBooks.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(bookIssuedService.getBookIssuedByUserid(userid));
+
+        LocalDate currentDate = LocalDate.now();
+
+        for (BookIssued bookIssued : issuedBooks) {
+            LocalDate returnDate = LocalDate.parse(bookIssued.getReturndate());
+            long daysOverdue = ChronoUnit.DAYS.between(returnDate, currentDate);
+
+            if (daysOverdue > 15) {
+                long dues = (daysOverdue - 15) * 2; // 2 rs per day as dues
+                bookIssued.setFine((int) dues);
+            } else {
+                bookIssued.setFine(0);
+            }
+
+            // Update the bookIssued record in the database
+            bookIssuedService.updateBookIssued(bookIssued);
+        }
+
+        return ResponseEntity.ok().body(issuedBooks);
     }
+
+//    @GetMapping("/userid/{userid}")
+//    public ResponseEntity<List<BookIssued>> getBookIssuedByUserid(@PathVariable(value = "userid") Long userid){
+//        if(userid == null){
+//            return ResponseEntity.badRequest().build();
+//        }
+//        if(bookIssuedService.getBookIssuedByUserid(userid).size() == 0){
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok().body(bookIssuedService.getBookIssuedByUserid(userid));
+//    }
 
     @GetMapping("/status/{status}")
     public ResponseEntity<List<BookIssued>> getBookIssuedByStatus(@PathVariable(value = "status") String status){
