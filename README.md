@@ -6,6 +6,10 @@ Welcome to the Library Management System, a modern and intuitive platform design
 
 The Library Management System is built to address the common challenges faced by libraries in managing their resources and users. With a user-friendly interface and powerful backend, this system ensures efficient handling of library operations, including user management, book borrowing, and return tracking.
 
+## Project Diagram
+![diagram](https://github.com/user-attachments/assets/72f840bd-f402-488d-8eeb-b563b5811156)
+
+
 ## Key Features
 
 - **User Management**: Effortlessly manage profiles of students, employees, and administrators. The system allows for easy addition, editing, and deletion of user information, ensuring that the library's user database is always up-to-date.
