@@ -1,5 +1,6 @@
 package lms.spring.LibraryManagementSystem.Controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lms.spring.LibraryManagementSystem.Model.User;
 import lms.spring.LibraryManagementSystem.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User Management", description = "Operations related to user management")
 public class UserController {
 
     @Autowired
