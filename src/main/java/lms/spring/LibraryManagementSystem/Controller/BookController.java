@@ -1,6 +1,5 @@
 package lms.spring.LibraryManagementSystem.Controller;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lms.spring.LibraryManagementSystem.Model.Book;
 import lms.spring.LibraryManagementSystem.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/book")
-@Tag(name = "Book Management", description = "Operations related to book management")
 public class BookController {
 
     @Autowired
